@@ -40,38 +40,48 @@ proc = False
 qT = qTi
 # default Burst Time
 dbt = Blist.copy()
+# Pending Checker
+pchk = 0
 
 while len(Plist) > 0 or len(pendingP) > 0:
-    if not is_empty(Alist) and TE >= Alist[0] and proc != True:
+    if not is_empty(Alist) and TE >= Alist[0] and proc != True and pchk == 0:
         print(f"Process {Plist[0]} is being processed at {TE}")
         pendingA.append(Alist.pop(0))
         proc = True
     
     if len(pendingP) > 0 and proc != True:
         proc = True
+        if pchk == 0:
+            pchk = len(pendingP)
         Plist.insert(0, pendingP.pop(0))
         Blist.insert(0, pendingB.pop(0))
         
-    elif proc:
+    if proc:
         Blist[0] -= 1
         qT -= 1
         
         if Blist[0] == 0:
             print(f"Process {Plist.pop(0)} is done at {TE+1}")
-            Blist.pop(0)
+            achk = Blist.pop(0)
             qT = qTi
             
             TaT.append((TE+1) - pendingA.pop(0))
             WT.append(TaT[wti] - dbt.pop(0))
             wti += 1
             
-            if is_empty(pendingP):
-                proc = False
-            else:
+            if pchk > 0:
+                pchk -= 1
+            
+            if is_empty(pendingP) != True and pchk > 0:
                 Plist.insert(0, pendingP.pop(0))
                 Blist.insert(0, pendingB.pop(0))
+            else:
+                proc = False
                        
         elif qT == 0:
+            if pchk > 0:
+                pchk -= 1
+            
             if len(Plist) < 2:
                 qT = qTi
             else:
