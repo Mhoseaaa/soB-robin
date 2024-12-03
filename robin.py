@@ -75,6 +75,7 @@ while len(Plist) > 0 or len(pendingP) > 0:
         proc = True
     
     if len(pendingP) > 0 and proc != True:
+        gantt_data.append([pendingP[0], TE, None])  # Start time
         proc = True
         if pchk == 0:
             pchk = len(pendingP)
@@ -86,6 +87,11 @@ while len(Plist) > 0 or len(pendingP) > 0:
         qT -= 1
         
         if Blist[0] == 0:
+            if proc and Blist[0] == 0:
+                for entry in gantt_data:
+                    if entry[0] == Plist[0] and entry[2] is None:  # Find process entry with no end time
+                        entry[2] = TE + 1  # Add end time
+            
             Fproc = Plist.pop(0)
             print(f"Process {Fproc} is done at {TE+1}")
             Blist.pop(0)
@@ -109,11 +115,6 @@ while len(Plist) > 0 or len(pendingP) > 0:
             
             if pchk > 0:
                 pchk -= 1
-                
-            if proc and Blist[0] == 0:
-                for entry in gantt_data:
-                    if entry[0] == Plist[0] and entry[2] is None:  # Find process entry with no end time
-                        entry[2] = TE + 1  # Add end time
             
             if is_empty(pendingP) != True and pchk > 0:
                 Plist.insert(0, pendingP.pop(0))
@@ -128,7 +129,7 @@ while len(Plist) > 0 or len(pendingP) > 0:
             if len(Plist) < 2:
                 qT = qTi
             else:
-                if proc and Blist[0] == 0:
+                if proc:
                     for entry in gantt_data:
                         if entry[0] == Plist[0] and entry[2] is None:  # Find process entry with no end time
                             entry[2] = TE + 1  # Add end time
