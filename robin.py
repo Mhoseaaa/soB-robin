@@ -68,8 +68,8 @@ pendingA = []
 
 # Arrival + Burst Time
 for i in range(nP):
-    aT = get_arrival_integer(f"Project {i+1} Arrival time: ", Alist)
-    bT = get_burst_integer(f"Project {i+1} Burst time: ")
+    aT = get_arrival_integer(f"Process {i+1} Arrival time: ", Alist)
+    bT = get_burst_integer(f"Process {i+1} Burst time: ")
     
     Plist.append(f"P{i+1}")
     Alist.append(aT)
