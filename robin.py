@@ -33,17 +33,6 @@ def get_arrival_integer(prompt, alist):
         except ValueError:
             print("Invalid Input! Please enter an Integer")
 
-def get_burst_integer(prompt):
-    while True:
-        try:
-            value = int(input(prompt))
-            if value > 0:
-                return value
-            else:
-                print("Invalid Input! Enter positive integer")
-        except ValueError:
-            print("Invalid Input! Please enter an Integer")
-
 # Amount of Process
 nP = get_integer("How many Process do you need?: ")
 # Quantum Time
@@ -69,7 +58,7 @@ pendingA = []
 # Arrival + Burst Time
 for i in range(nP):
     aT = get_arrival_integer(f"Process {i+1} Arrival time: ", Alist)
-    bT = get_burst_integer(f"Process {i+1} Burst time: ")
+    bT = get_integer(f"Process {i+1} Burst time: ")
     
     Plist.append(f"P{i+1}")
     Alist.append(aT)
