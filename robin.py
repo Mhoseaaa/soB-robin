@@ -90,6 +90,10 @@ dbt = Blist.copy()
 # Pending Checker
 pchk = 0
 
+# Waiting Arrival & burst
+Wal = []
+Wbl = []
+
 # Table Data
 results = []
 
@@ -109,6 +113,8 @@ while len(Plist) > 0 or len(pendingP) > 0:
         proc = True
         if pchk == 0:
             pchk = len(pendingP)
+        pendingA.insert(0, Wal.pop(0))
+        dbt.insert(0, Wbl.pop(0))
         Plist.insert(0, pendingP.pop(0))
         Blist.insert(0, pendingB.pop(0))
     
@@ -139,7 +145,7 @@ while len(Plist) > 0 or len(pendingP) > 0:
                 "Process ID": Fproc,
                 "Arrival Time": arrival,
                 "Burst Time": burst,
-                "Completion Time": TE+1,
+                "Completion Time": TE,
                 "Turn Around Time": TaT[wti],
                 "Waiting Time": WT[wti]
             })
@@ -151,6 +157,8 @@ while len(Plist) > 0 or len(pendingP) > 0:
             
             if is_empty(pendingP) != True and pchk > 0:
                 gantt_data.append([pendingP[0], TE, None])  # Start time
+                pendingA.insert(0, Wal.pop(0))
+                dbt.insert(0, Wbl.pop(0))
                 Plist.insert(0, pendingP.pop(0))
                 Blist.insert(0, pendingB.pop(0))
             else:
@@ -167,8 +175,8 @@ while len(Plist) > 0 or len(pendingP) > 0:
                     for entry in gantt_data:
                         if entry[0] == Plist[0] and entry[2] is None:  # Find process entry with no end time
                             entry[2] = TE  # Add end time
-                pendingA.append(pendingA.pop(0))
-                dbt.append(dbt.pop(0))
+                Wal.append(pendingA.pop(0))
+                Wbl.append(dbt.pop(0))
                 pendingB.append(Blist.pop(0))
                 pendingP.append(Plist.pop(0))
                 proc = False
