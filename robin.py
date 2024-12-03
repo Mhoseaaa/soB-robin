@@ -114,6 +114,7 @@ while len(Plist) > 0 or len(pendingP) > 0:
     
     # Start Process
     
+    TE += 1
     if proc:
         Blist[0] -= 1
         qT -= 1
@@ -122,16 +123,16 @@ while len(Plist) > 0 or len(pendingP) > 0:
             if proc and Blist[0] == 0:
                 for entry in gantt_data:
                     if entry[0] == Plist[0] and entry[2] is None:  # Find process entry with no end time
-                        entry[2] = TE + 1  # Add end time
+                        entry[2] = TE  # Add end time
             
             Fproc = Plist.pop(0)
-            print(f"Process {Fproc} is done at {TE+1}")
+            print(f"Process {Fproc} is done at {TE}")
             Blist.pop(0)
             qT = qTi
             
             arrival = pendingA.pop(0)
             burst = dbt.pop(0)
-            TaT.append((TE+1) - arrival)
+            TaT.append((TE) - arrival)
             WT.append(TaT[wti] - burst)
             
             results.append({
@@ -149,6 +150,7 @@ while len(Plist) > 0 or len(pendingP) > 0:
                 pchk -= 1
             
             if is_empty(pendingP) != True and pchk > 0:
+                gantt_data.append([pendingP[0], TE, None])  # Start time
                 Plist.insert(0, pendingP.pop(0))
                 Blist.insert(0, pendingB.pop(0))
             else:
@@ -164,13 +166,13 @@ while len(Plist) > 0 or len(pendingP) > 0:
                 if proc:
                     for entry in gantt_data:
                         if entry[0] == Plist[0] and entry[2] is None:  # Find process entry with no end time
-                            entry[2] = TE + 1  # Add end time
+                            entry[2] = TE  # Add end time
                 pendingB.append(Blist.pop(0))
                 pendingP.append(Plist.pop(0))
                 proc = False
                 qT = qTi
             
-    TE += 1
+
 # Average Turn-Around Time
 aTaT = round(sum(TaT) / len(TaT), 2)
 # Average Waiting Time
