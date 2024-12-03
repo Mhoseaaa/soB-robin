@@ -10,7 +10,7 @@ def get_integer(prompt):
     while True:
         try:
             value = int(input(prompt))
-            if value >= 0:
+            if value > 0:
                 return value
             else:
                 print("Invalid Input! Enter a neutral-positive integer")
@@ -201,7 +201,7 @@ fig, ax = plt.subplots(figsize=(10, 6))
 # Create bars for each process
 for process, start_time, end_time in gantt_data:
     ax.barh(process, end_time - start_time, left=start_time, edgecolor="black", color="skyblue")
-    
+
     ax.text(start_time, process, f'{start_time}',
             va='center', ha='right', fontsize=9, color='black')
     
