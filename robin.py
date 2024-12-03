@@ -101,7 +101,7 @@ while len(Plist) > 0 or len(pendingP) > 0:
     if not is_empty(Alist) and TE >= Alist[0] and proc != True and pchk == 0:
         print(f"Process {Plist[0]} is being processed at {TE}")
         gantt_data.append([Plist[0], TE, None])  # Start time
-        pendingA.append(Alist.pop(0))
+        pendingA.insert(0, Alist.pop(0))
         proc = True
     
     if len(pendingP) > 0 and proc != True:
@@ -167,6 +167,8 @@ while len(Plist) > 0 or len(pendingP) > 0:
                     for entry in gantt_data:
                         if entry[0] == Plist[0] and entry[2] is None:  # Find process entry with no end time
                             entry[2] = TE  # Add end time
+                pendingA.append(pendingA.pop(0))
+                dbt.append(dbt.pop(0))
                 pendingB.append(Blist.pop(0))
                 pendingP.append(Plist.pop(0))
                 proc = False
