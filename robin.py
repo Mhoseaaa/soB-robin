@@ -6,7 +6,7 @@ def is_empty(lst):
     return len(lst) == 0
 
 # Integer value getter
-def get_integer(prompt, type='F'):
+def get_integer(prompt):
     while True:
         try:
             value = int(input(prompt))
@@ -30,6 +30,7 @@ Alist = []
 # Turn-around Time and Waiting Time list
 TaT = []
 WT = []
+
 # Waiting Time Index
 wti = 0
 
@@ -41,9 +42,6 @@ pendingA = []
 # Arrival + Burst Time
 for i in range(nP):
     aT = get_integer(f"Project {i+1} Arrival time: ")
-    
-    
-    
     bT = get_integer(f"Project {i+1} Burst time: ")
     
     Plist.append(f"P{i+1}")
@@ -52,12 +50,16 @@ for i in range(nP):
 
 # Time Elapsed
 TE = 0
+
 # Process Checker
 proc = False
+
 # Quantum Time setter
 qT = qTi
+
 # default Burst Time
 dbt = Blist.copy()
+
 # Pending Checker
 pchk = 0
 
@@ -66,6 +68,7 @@ results = []
 
 # Gantt Chart Data
 gantt_data = []
+
 
 while len(Plist) > 0 or len(pendingP) > 0:
     if not is_empty(Alist) and TE >= Alist[0] and proc != True and pchk == 0:
@@ -81,7 +84,9 @@ while len(Plist) > 0 or len(pendingP) > 0:
             pchk = len(pendingP)
         Plist.insert(0, pendingP.pop(0))
         Blist.insert(0, pendingB.pop(0))
-        
+    
+    # Start Process
+    
     if proc:
         Blist[0] -= 1
         qT -= 1
@@ -157,6 +162,12 @@ fig, ax = plt.subplots(figsize=(10, 6))
 # Create bars for each process
 for process, start_time, end_time in gantt_data:
     ax.barh(process, end_time - start_time, left=start_time, edgecolor="black", color="skyblue")
+    
+    ax.text(start_time, process, f'{start_time}',
+            va='center', ha='right', fontsize=9, color='black')
+    
+    ax.text(end_time,process, f'{end_time}',
+            va='center', ha='left', fontsize=9, color='black')
 
 ax.set_xlabel("Time")
 ax.set_ylabel("Processes")
