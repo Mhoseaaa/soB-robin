@@ -13,6 +13,33 @@ def get_integer(prompt):
             if value >= 0:
                 return value
             else:
+                print("Invalid Input! Enter a neutral-positive integer")
+        except ValueError:
+            print("Invalid Input! Please enter an Integer")
+
+def get_arrival_integer(prompt, alist):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value >= 0:
+                if is_empty(alist):
+                    return value
+                elif value >= alist[-1]:
+                    return value
+                else:
+                    print("Invalid Input! Arrival Time must be bigger or equal to previous")
+            else:
+                print("Invalid Input! Enter positive integer")
+        except ValueError:
+            print("Invalid Input! Please enter an Integer")
+
+def get_burst_integer(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value > 0:
+                return value
+            else:
                 print("Invalid Input! Enter positive integer")
         except ValueError:
             print("Invalid Input! Please enter an Integer")
@@ -41,8 +68,8 @@ pendingA = []
 
 # Arrival + Burst Time
 for i in range(nP):
-    aT = get_integer(f"Project {i+1} Arrival time: ")
-    bT = get_integer(f"Project {i+1} Burst time: ")
+    aT = get_arrival_integer(f"Project {i+1} Arrival time: ", Alist)
+    bT = get_burst_integer(f"Project {i+1} Burst time: ")
     
     Plist.append(f"P{i+1}")
     Alist.append(aT)
