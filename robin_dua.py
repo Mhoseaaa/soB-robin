@@ -101,7 +101,7 @@ while len(Plist) > 0 or len(ready_queue) > 0 or len(pending_processes) > 0:
         # Process is complete
         completion_time = TE
         turnaround_time = completion_time - arrival_time
-        waiting_time = turnaround_time - dbt[int(process_id[1]) - 1]
+        waiting_time = turnaround_time - dbt[int(process_id[1]) - 1] # Ambil string 1 dari P1 kemudian kurangi 1 untuk index 0
         results.append({
             "Process ID": process_id,
             "Arrival Time": arrival_time,
