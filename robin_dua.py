@@ -13,7 +13,7 @@ def get_integer(prompt):
             if value > 0:
                 return value
             else:
-                print("Invalid Input! Enter a neutral-positive integer")
+                print("Invalid Input! Enter a positive integer")
         except ValueError:
             print("Invalid Input! Please enter an Integer")
 
