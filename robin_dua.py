@@ -35,6 +35,8 @@ def get_arrival_integer(prompt, alist):
         except ValueError:
             print("Invalid Input! Please enter an Integer")
 
+print("Welcome to Round-Robin Program\n")
+
 # Amount of Process
 nP = get_integer("How many Process do you need?: ")
 # Quantum Time
@@ -73,9 +75,9 @@ results = []
 # Ready queue and pending processes
 ready_queue = []
 
-while len(Plist) > 0 or len(ready_queue) > 0:
+while not is_empty(Plist) or not is_empty(ready_queue):
     # Add processes to ready queue if their arrival time is <= current time
-    while len(Plist) > 0 and Alist[0] <= TE:
+    while not is_empty(Plist) and Alist[0] <= TE:
         ready_queue.append((Plist.pop(0), Blist.pop(0), Alist.pop(0)))
 
     if not ready_queue:  # If no process is ready, increment time
@@ -95,7 +97,7 @@ while len(Plist) > 0 or len(ready_queue) > 0:
     # If burst time remains, re-add to ready queue with updated burst time
     if burst_time > 0:
         # Add any newly arrived processes to the ready queue
-        while len(Plist) > 0 and Alist[0] <= TE:
+        while not is_empty(Plist) and Alist[0] <= TE:
             ready_queue.append((Plist.pop(0), Blist.pop(0), Alist.pop(0)))
         ready_queue.append((process_id, burst_time, arrival_time))
     else:
