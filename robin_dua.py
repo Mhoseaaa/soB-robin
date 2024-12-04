@@ -1,4 +1,6 @@
+# for Table
 import pandas as pd
+# for Gantt Chart
 import matplotlib.pyplot as plt
 
 # Empty list checker
