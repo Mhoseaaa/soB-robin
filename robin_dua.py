@@ -70,9 +70,8 @@ results = []
 
 # Ready queue and pending processes
 ready_queue = []
-pending_processes = []
 
-while len(Plist) > 0 or len(ready_queue) > 0 or len(pending_processes) > 0:
+while len(Plist) > 0 or len(ready_queue) > 0:
     # Add processes to ready queue if their arrival time is <= current time
     while len(Plist) > 0 and Alist[0] <= TE:
         ready_queue.append((Plist.pop(0), Blist.pop(0), Alist.pop(0)))
@@ -91,7 +90,7 @@ while len(Plist) > 0 or len(ready_queue) > 0 or len(pending_processes) > 0:
     TE += execution_time  # Increment time by execution time
     burst_time -= execution_time
 
-    # If burst time remains, re-add to ready queue or pending queue if new processes arrive
+    # If burst time remains, re-add to ready queue with updated burst time
     if burst_time > 0:
         # Add any newly arrived processes to the ready queue
         while len(Plist) > 0 and Alist[0] <= TE:
